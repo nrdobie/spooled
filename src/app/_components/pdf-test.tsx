@@ -36,7 +36,6 @@ async function generatePdf(spools: Spools) {
     page.setFont("Roboto", "normal");
     page.text(spool.filament.brand.name, 0.1, 0.2);
     const x = doc.getTextWidth(`${spool.filament.brand.name} `) + 0.1;
-    console.log(x);
     page.setFont("Roboto", "bold");
     page.text(spool.filament.color, x, 0.2);
 

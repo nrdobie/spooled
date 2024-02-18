@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloClient, ApolloLink, HttpLink } from "@apollo/client";
+import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
   NextSSRApolloClient,
@@ -17,9 +17,7 @@ function makeClient() {
         : `http://localhost:3000/api/graphql`,
   });
 
-  const Client = process.env.NODE_ENV === "production" ? NextSSRApolloClient : ApolloClient;
-
-  return new Client({
+  return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link:
       typeof window === "undefined"

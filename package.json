@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "reset-db": "prisma db push --force-reset && prisma db seed",
-    "studio": "prisma studio --browser none"
+    "studio": "prisma studio --browser none",
+    "graphql-codegen": "graphql-codegen",
+    "graphql-codegen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
@@ -16,6 +18,7 @@
     "@apollo/server": "^4.10.0",
     "@as-integrations/next": "^3.0.0",
     "@graphql-tools/schema": "^10.0.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.9.1",
     "@types/qrcode": "^1.5.5",
@@ -39,6 +42,7 @@
     "@graphql-codegen/schema-ast": "^4.0.2",
     "@graphql-codegen/typescript": "^4.0.4",
     "@graphql-codegen/typescript-resolvers": "^4.0.4",
+    "@parcel/watcher": "^2.4.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.10",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
@@ -56,7 +60,7 @@
     "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0",
     "tsx": "^4.7.1",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

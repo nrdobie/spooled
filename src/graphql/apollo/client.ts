@@ -11,6 +11,6 @@ const { getClient } = registerApolloClient(() => {
   });
 });
 
-const getApolloClient = getClient as () => ApolloClient<NormalizedCacheObject>;
+const apolloClient = getClient() as ApolloClient<NormalizedCacheObject>;
 
-export default getApolloClient;
+export default apolloClient;
