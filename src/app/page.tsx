@@ -1,5 +1,3 @@
-import PdfTest from "@/app/_components/pdf-test";
-import getSpools from "@/app/_fetchers/get-spools";
 import query from "@/graphql/apollo/query";
 import { graphql } from "@/graphql/client";
 
@@ -10,8 +8,6 @@ const TEST_QUERY = graphql(/* GraphQL */ `
 `);
 
 export default async function Home() {
-  const spools = await getSpools();
-
   const { data, error } = await query(TEST_QUERY);
 
   if (error) {
@@ -24,7 +20,6 @@ export default async function Home() {
       <pre>
         <code>{JSON.stringify(data, null, 2)}</code>
       </pre>
-      <PdfTest spools={spools} />
     </main>
   );
 }
