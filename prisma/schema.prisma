@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model FilamentType {
+  id        String @id @default(cuid())
+  shortName String @unique
+  longName  String
+
+  subtypes  FilamentTypeSubtype[]
+  filaments Filament[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FilamentTypeSubtype {
+  id             String  @id @default(cuid())
+  defaultSubtype Boolean @default(false)
+  name           String
+
+  filamentTypeId String
+  filamentType   FilamentType @relation(fields: [filamentTypeId], references: [id])
+
+  filaments Filament[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([filamentTypeId])
+}
+
+model Brand {
+  id      String @id @default(cuid())
+  name    String
+  website String
+
+  filaments Filament[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CommonColor {
+  id      String @id @default(cuid())
+  name    String
+  hexCode String
+
+  filamentColorways FilamentColorway[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Filament {
+  id                    String               @id @default(cuid())
+  brandId               String
+  brand                 Brand                @relation(fields: [brandId], references: [id])
+  filamentTypeId        String
+  filamentType          FilamentType         @relation(fields: [filamentTypeId], references: [id])
+  filamentTypeSubtypeId String?
+  filamentTypeSubtype   FilamentTypeSubtype? @relation(fields: [filamentTypeSubtypeId], references: [id])
+  colorways             FilamentColorway[]
+  weight                Float
+  diameter              Float
+  link                  String?
+
+  nozzleMinTemp Float?
+  nozzleMaxTemp Float?
+  bedMinTemp    Float?
+  bedMaxTemp    Float?
+
+  spools Spool[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([brandId])
+  @@index([filamentTypeId])
+  @@index([filamentTypeSubtypeId])
+}
+
+model FilamentColorway {
+  id            String      @id @default(cuid())
+  color         String
+  colorHex      String?
+  commonColorId String
+  commonColor   CommonColor @relation(fields: [commonColorId], references: [id])
+  filamentId    String
+  filament      Filament    @relation(fields: [filamentId], references: [id])
+  link          String?
+
+  @@index([commonColorId])
+  @@index([filamentId])
+}
+
+model Spool {
+  id              String    @id @default(cuid())
+  humanReadableId Int       @default(autoincrement())
+  filamentId      String
+  filament        Filament  @relation(fields: [filamentId], references: [id])
+  purchaseDate    DateTime?
+  notes           String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([humanReadableId])
+  @@index([filamentId])
+}
