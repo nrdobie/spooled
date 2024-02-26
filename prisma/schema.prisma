@@ -36,13 +36,14 @@ model FilamentTypeSubtype {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([filamentTypeId, id])
   @@index([filamentTypeId])
 }
 
 model Brand {
-  id      String @id @default(cuid())
+  id      String  @id @default(cuid())
   name    String
-  website String
+  website String?
 
   filaments Filament[]
 
@@ -68,7 +69,7 @@ model Filament {
   filamentTypeId        String
   filamentType          FilamentType         @relation(fields: [filamentTypeId], references: [id])
   filamentTypeSubtypeId String?
-  filamentTypeSubtype   FilamentTypeSubtype? @relation(fields: [filamentTypeSubtypeId], references: [id])
+  filamentTypeSubtype   FilamentTypeSubtype? @relation(fields: [filamentTypeId, filamentTypeSubtypeId], references: [filamentTypeId, id])
   colorways             FilamentColorway[]
   weight                Float
   diameter              Float
@@ -84,22 +85,27 @@ model Filament {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([filamentTypeId, filamentTypeSubtypeId])
   @@index([brandId])
   @@index([filamentTypeId])
-  @@index([filamentTypeSubtypeId])
+}
+
+enum ColorDisplay {
+  Solid
+  Gradient
+  Dual
 }
 
 model FilamentColorway {
-  id            String      @id @default(cuid())
-  color         String
-  colorHex      String?
-  commonColorId String
-  commonColor   CommonColor @relation(fields: [commonColorId], references: [id])
-  filamentId    String
-  filament      Filament    @relation(fields: [filamentId], references: [id])
-  link          String?
+  id           String        @id @default(cuid())
+  color        String
+  colorHex     String?
+  colorDisplay ColorDisplay
+  commonColors CommonColor[]
+  filamentId   String
+  filament     Filament      @relation(fields: [filamentId], references: [id])
+  link         String?
 
-  @@index([commonColorId])
   @@index([filamentId])
 }
 

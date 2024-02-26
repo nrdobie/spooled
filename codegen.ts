@@ -26,7 +26,7 @@ const config: CodegenConfig = {
         useIndexSignature: true,
         mapperTypeSuffix: "Model",
         mappers: {
-          // Community: "@prisma/client#Community",
+          Brand: "@prisma/client#Brand",
           // CommunityMember: "@prisma/client#CommunityMember",
           // Viewer: "@prisma/client#User",
         },

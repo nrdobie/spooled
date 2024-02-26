@@ -1,3 +1,5 @@
+import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import React from "react";
@@ -5,6 +7,8 @@ import React from "react";
 import { ApolloWrapper } from "@/graphql/apollo/wrapper";
 
 import "./globals.css";
+
+fontAwesomeConfig.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
 

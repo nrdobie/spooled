@@ -13,7 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  query AdminBrandsDelete($brandId: ID!) {\n    brand(id: $brandId) {\n      id\n      name\n    }\n  }\n": types.AdminBrandsDeleteDocument,
+    "\n  query AdminBrands {\n    brands {\n      id\n      ...Admin_Brands_BrandCard_Brand\n    }\n  }\n": types.AdminBrandsDocument,
     "\n  query Test {\n    healthCheck\n  }\n": types.TestDocument,
+    "\n  fragment Admin_Brands_BrandCard_Brand on Brand {\n    id\n    name\n    website\n  }\n": types.Admin_Brands_BrandCard_BrandFragmentDoc,
 };
 
 /**
@@ -33,7 +36,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  query AdminBrandsDelete($brandId: ID!) {\n    brand(id: $brandId) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query AdminBrandsDelete($brandId: ID!) {\n    brand(id: $brandId) {\n      id\n      name\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query AdminBrands {\n    brands {\n      id\n      ...Admin_Brands_BrandCard_Brand\n    }\n  }\n"): (typeof documents)["\n  query AdminBrands {\n    brands {\n      id\n      ...Admin_Brands_BrandCard_Brand\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  query Test {\n    healthCheck\n  }\n"): (typeof documents)["\n  query Test {\n    healthCheck\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment Admin_Brands_BrandCard_Brand on Brand {\n    id\n    name\n    website\n  }\n"): (typeof documents)["\n  fragment Admin_Brands_BrandCard_Brand on Brand {\n    id\n    name\n    website\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
